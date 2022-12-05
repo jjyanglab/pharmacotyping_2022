@@ -30,8 +30,6 @@ for (curr.drug in all.drugs) {
     min_conc <- curr.conc.range$min_conc[1]
     
     curr.lc50.normalized <- (log(curr.lc50) - log(curr.conc.range$min_conc)) / (log(max_conc) - log(min_conc))
-    curr.lc50.normalized[curr.lc50.normalized <= 0]  <- 0
-    curr.lc50.normalized[curr.lc50.normalized >= 1]  <- 1
     lc50.data[[paste0(curr.drug, '_normalized')]] <- curr.lc50.normalized
 }
 
@@ -85,6 +83,8 @@ failed.drugs.r2 <- names(imputed.lc50.data)[colSums(is.na(imputed.lc50.data)) > 
 print(failed.drugs.r2)
 
 ### Clustering of patients based on the imputed lc50s
+
+imputed.lc50.data <- read.csv('../data/imputed_lc50_data.csv')
 
 library(ComplexHeatmap)
 library(circlize)
